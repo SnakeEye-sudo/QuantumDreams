@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - QuantumDreams{% endblock %}
+
+{% block content %}
+<h1>Welcome to QuantumDreams</h1>
+<p style="text-align: center; color: white; font-size: 1.2em; margin: 20px 0;">
+    Explore the quantum realm of your dreams through AI-powered visualization
+</p>
+
+<div class="nav-links">
+    <a href="{{ url_for('dream_input') }}" class="btn">Enter a Dream</a>
+    <a href="{{ url_for('visualization') }}" class="btn">View Visualizations</a>
+    <a href="{{ url_for('stats') }}" class="btn">Dream Statistics</a>
+</div>
+
+<div class="form-group">
+    <h2>About QuantumDreams</h2>
+    <p>QuantumDreams is an innovative web application that combines dream analysis with quantum-inspired algorithms to create unique visualizations of your dreams. Enter your dreams, explore patterns, and discover insights about your subconscious mind.</p>
+</div>
+{% endblock %}
