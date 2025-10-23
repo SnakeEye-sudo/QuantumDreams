@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumDreams - Home</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        .feature {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .feature h3 {
+            color: #FFD700;
+            margin-bottom: 15px;
+        }
+        .navigation {
+            text-align: center;
+        }
+        .nav-button {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: transform 0.3s ease;
+            font-weight: bold;
+        }
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌌 QuantumDreams 🌌</h1>
+            <p class="subtitle">Explore the quantum realm of your dreams through advanced visualization and analysis</p>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>🧠 Dream Analysis</h3>
+                <p>Input your dreams and receive quantum-inspired analysis including coherence measurements and dimensional mapping.</p>
+            </div>
+            <div class="feature">
+                <h3>📊 Quantum Visualization</h3>
+                <p>See your dreams transformed into beautiful quantum-inspired visualizations with interactive elements.</p>
+            </div>
+            <div class="feature">
+                <h3>📈 Dream Statistics</h3>
+                <p>Track your dream patterns, quantum coherence levels, and discover insights about your subconscious mind.</p>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <a href="/dream-input" class="nav-button">📝 Input Dream</a>
+            <a href="/visualization" class="nav-button">🎨 Visualizations</a>
+            <a href="/stats" class="nav-button">📊 Statistics</a>
+        </div>
+    </div>
+</body>
+</html>
