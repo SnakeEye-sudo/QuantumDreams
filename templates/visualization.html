@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumDreams - Visualization</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0f3460 0%, #16537e 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .controls {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .control-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .control-btn:hover {
+            transform: scale(1.05);
+        }
+        .visualization-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .dream-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .dream-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            animation: rotate 10s linear infinite;
+        }
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+        .dream-content {
+            position: relative;
+            z-index: 1;
+        }
+        .dream-id {
+            color: #FFD700;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .dream-text {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        .quantum-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .metric {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        .metric-value {
+            color: #FFD700;
+            font-weight: bold;
+        }
+        .quantum-wave {
+            width: 100%;
+            height: 80px;
+            margin: 15px 0;
+            position: relative;
+        }
+        .wave-canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+            background: linear-gradient(90deg, #001122, #003366);
+        }
+        .timestamp {
+            font-size: 0.8em;
+            opacity: 0.7;
+            text-align: right;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .nav-links {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .nav-link {
+            color: #FFD700;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌌 Quantum Dream Visualizations 🌌</h1>
+            <p>Experience your dreams through quantum-inspired visual representations</p>
+        </div>
+        
+        <div class="controls">
+            <button class="control-btn" onclick="refreshVisualizations()">🔄 Refresh</button>
+            <button class="control-btn" onclick="animateWaves()">⚡ Animate Waves</button>
+            <button class="control-btn" onclick="toggleQuantumMode()">🔮 Quantum Mode</button>
+        </div>
+        
+        <div id="visualizationContainer">
+            {% if dreams %}
+                <div class="visualization-grid">
+                    {% for dream in dreams %}
+                    <div class="dream-card" data-dream-id="{{ dream.id }}">
+                        <div class="dream-content">
+                            <div class="dream-id">🌙 Dream #{{ dream.id }}</div>
+                            <div class="dream-text">{{ dream.text[:150] }}{% if dream.text|length > 150 %}...{% endif %}</div>
+                            
+                            <div class="quantum-metrics">
+                                <div class="metric">
+                                    <div>Quantum Coherence</div>
+                                    <div class="metric-value">{{ "%.2f"|format(dream.quantum_coherence) }}</div>
+                                </div>
+                                <div class="metric">
+                                    <div>Dimensions</div>
+                                    <div class="metric-value">{{ dream.dimensions }}D</div>
+                                </div>
+                                <div class="metric">
+                                    <div>Intensity</div>
+                                    <div class="metric-value">{{ dream.intensity }}/10</div>
+                                </div>
+                                <div class="metric">
+                                    <div>Entanglement</div>
+                                    <div class="metric-value">{{ "%.1f"|format(dream.quantum_coherence * 100) }}%</div>
+                                </div>
+                            </div>
+                            
+                            <div class="quantum-wave">
+                                <canvas class="wave-canvas" data-coherence="{{ dream.quantum_coherence }}" data-intensity="{{ dream.intensity }}"></canvas>
+                            </div>
+                            
+                            <div class="timestamp">{{ dream.timestamp[:19] if dream.timestamp else 'Unknown' }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <h2>🌌 No Dreams Visualized Yet 🌌</h2>
+                    <p>Start by inputting your dreams to see quantum visualizations!</p>
+                    <a href="/dream-input" class="control-btn" style="display: inline-block; text-decoration: none; margin-top: 20px;">
+                        📝 Input Your First Dream 📝
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="nav-links">
+            <a href="/" class="nav-link">🏠 Home</a>
+            <a href="/dream-input" class="nav-link">📝 Dream Input</a>
+            <a href="/stats" class="nav-link">📊 Statistics</a>
+        </div>
+    </div>
+    
+    <script>
+        let quantumMode = false;
+        
+        function refreshVisualizations() {
+            location.reload();
+        }
+        
+        function toggleQuantumMode() {
+            quantumMode = !quantumMode;
+            const cards = document.querySelectorAll('.dream-card');
+            cards.forEach(card => {
+                if (quantumMode) {
+                    card.style.transform = 'scale(1.02) rotate(0.5deg)';
+                    card.style.boxShadow = '0 15px 35px rgba(255, 215, 0, 0.3)';
+                } else {
+                    card.style.transform = 'scale(1) rotate(0deg)';
+                    card.style.boxShadow = 'none';
+                }
+            });
+        }
+        
+        function animateWaves() {
+            const canvases = document.querySelectorAll('.wave-canvas');
+            canvases.forEach(canvas => {
+                const ctx = canvas.getContext('2d');
+                const coherence = parseFloat(canvas.dataset.coherence) || 0.5;
+                const intensity = parseInt(canvas.dataset.intensity) || 5;
+                
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+                
+                let time = 0;
+                function drawWave() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Background gradient
+                    const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+                    gradient.addColorStop(0, `rgba(0, ${Math.floor(100 * coherence)}, ${Math.floor(150 * coherence)}, 0.3)`);
+                    gradient.addColorStop(1, `rgba(${Math.floor(100 * intensity)}, 50, 200, 0.3)`);
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Draw quantum wave
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(255, 215, 0, ${coherence})`;
+                    ctx.lineWidth = 2;
+                    
+                    for (let x = 0; x < canvas.width; x += 2) {
+                        const frequency = 0.02 * intensity;
+                        const amplitude = canvas.height * 0.3 * coherence;
+                        const y = canvas.height / 2 + amplitude * Math.sin(frequency * x + time * 0.05);
+                        
+                        if (x === 0) {
+                            ctx.moveTo(x, y);
+                        } else {
+                            ctx.lineTo(x, y);
+                        }
+                    }
+                    ctx.stroke();
+                    
+                    // Add particle effects
+                    for (let i = 0; i < 5; i++) {
+                        const x = Math.random() * canvas.width;
+                        const y = canvas.height / 2 + (Math.random() - 0.5) * canvas.height * 0.6;
+                        ctx.beginPath();
+                        ctx.arc(x, y, Math.random() * 3 + 1, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(255, 215, 0, ${Math.random() * coherence})`;
+                        ctx.fill();
+                    }
+                    
+                    time++;
+                }
+                
+                // Animate for 3 seconds
+                const interval = setInterval(drawWave, 50);
+                setTimeout(() => clearInterval(interval), 3000);
+            });
+        }
+        
+        // Initialize wave animations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(animateWaves, 500);
+        });
+    </script>
+</body>
+</html>
